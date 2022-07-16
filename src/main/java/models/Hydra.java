@@ -39,22 +39,47 @@ public class Hydra {
     }
 
     public void removeOneHead() {
-        this.decrementHeads(1);
-        this.incrementHeads(1);
+        if (this.getHeads() > 0) {
+            this.decrementHeads(1);
+            this.incrementHeads(1);
+        }
+        else {
+            System.out.println("Invalid move. Current head count: " + this.getHeads());
+        }
     }
 
     public void removeOneTail() {
-        this.decrementTails(1);
-        this.incrementTails(2);
+        if (this.getTails() > 0) {
+            this.decrementTails(1);
+            this.incrementTails(2);
+        }
+        else {
+            System.out.println("Invalid move. Current tail count: " + this.getTails());
+        }
     }
 
     public void removeTwoHeads() {
-        this.decrementHeads(2);
+        if (this.getHeads() - 2 >= 0) {
+            this.decrementHeads(2);
+        }
+        else {
+            System.out.println("Invalid move. Current head count: " + this.getHeads());
+        }
     }
 
     public void removeTwoTails() {
-        this.decrementTails(2);
-        this.incrementHeads(1);
+        if (this.getTails() - 2 >= 0) {
+            this.decrementTails(2);
+            this.incrementHeads(1);
+        }
+        else {
+            System.out.println("Invalid move. Current tail count: " + this.getTails());
+        }
+    }
+
+    public void printStatus() {
+        System.out.println("Hydra status -> Heads: " + this.getHeads() + "; Tails: " + this.getTails());
+        System.out.println();
     }
 
 }
