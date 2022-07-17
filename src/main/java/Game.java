@@ -23,18 +23,55 @@ public class Game {
     private Hydra hydra;
 
     public void startGame() {
-        // FIXME: 7/16/2022: add user input validation for hydra set up
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("heads: ");
-        int heads = Integer.parseInt(scanner.nextLine());
-
-        System.out.println("tails: ");
-        int tails = Integer.parseInt(scanner.nextLine());
-
-        this.setHydra(new Hydra(heads, tails));
+        this.buildHydra();
         this.gameLoop();
     }
+
+    private void buildHydra() {
+        int heads = receiveHydraInput("heads");
+        int tails = receiveHydraInput("tails");
+        this.setHydra(new Hydra(heads, tails));
+    }
+
+    private int receiveHydraInput(String hydraPart) {
+        boolean inputValid = false;
+        Scanner scanner = new Scanner(System.in);
+        String hydraPartCount = "";
+
+        while (!inputValid) {
+            System.out.print("Please input the number of " + hydraPart + ": ");
+            hydraPartCount = scanner.nextLine();
+            inputValid = validateHydraInput(hydraPartCount);
+        }
+
+        return Integer.parseInt(hydraPartCount);
+    }
+
+    private boolean validateHydraInput(String hydraPartCount) {
+
+        return !checkIfNumeric(hydraPartCount)
+                && !checkHydraInputLength(hydraPartCount)
+                && !checkHydraValue(Integer.parseInt(hydraPartCount));
+    }
+
+    private boolean checkHydraValue(int hydraPartCount) {
+        if (hydraPartCount < 0 ) {
+            System.out.println("Input is not at least 0.");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkHydraInputLength(String hydraPartCount) {
+        if (hydraPartCount.length() < 1) {
+            System.out.println("Input cannot be empty.");
+            return true;
+        }
+
+        return false;
+    }
+
+
 
     private void gameLoop() {
         while (this.isContinueGame()) {
@@ -93,7 +130,7 @@ public class Game {
     private boolean checkIfNumeric(String input) {
         for (int i = 0; i < input.length(); ++i) {
             if (!Character.isDigit(input.charAt(i))) {
-                System.out.println("Input not numeric.");
+                System.out.println("Input not valid. Cannot have a negative sign or be non-numeric.");
                 return true;
             }
         }
