@@ -1,8 +1,13 @@
 package game;
 
+import lombok.Getter;
+
 import java.util.Scanner;
 
 public class GameStaticHelpers {
+
+    @Getter
+    final static String KNIGHT_NAME = "PyPy";
 
     static void printGameMenu() {
         System.out.println("1. Cut off one head. ");
@@ -15,11 +20,12 @@ public class GameStaticHelpers {
     }
 
     static void printWinMessage() {
-        System.out.println("You killed the hydra, PyPy! Thank you!!!");
+        System.out.println("You killed the hydra, " + GameStaticHelpers.getKNIGHT_NAME()+ "! Thank you!!!");
     }
 
     static void printLossMessage() {
-        System.out.println("Hope is lost, PyPy! The hydra cannot be defeated now");
+        System.out.println("Hope is lost, " + GameStaticHelpers.getKNIGHT_NAME()
+                + "! The hydra cannot be defeated now");
         System.out.println("------------GAME OVER------------");
         System.out.println("");
     }
@@ -30,7 +36,7 @@ public class GameStaticHelpers {
         String hydraPartCount = "";
 
         while (!inputValid) {
-            System.out.print("Please input the number of " + hydraPart + ": ");
+            System.out.print("How many " + hydraPart + " do you see? ");
             hydraPartCount = scanner.nextLine();
             inputValid = validateHydraInput(hydraPartCount);
         }

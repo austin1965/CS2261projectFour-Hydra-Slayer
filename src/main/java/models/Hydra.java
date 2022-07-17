@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Hydra {
+
     private int heads;
     private int tails;
 
@@ -76,12 +77,13 @@ public class Hydra {
             System.out.println("Removed two tails. A head sprouts in response.");
         }
         else {
-            System.out.println("Invalid move. Current tail count: " + this.getTails());
+            System.out.println("Invalid move. Current tails count: " + this.getTails());
         }
     }
 
     public void printStatus() {
-        System.out.println("Hydra status -> Heads: " + this.getHeads() + "; Tails: " + this.getTails());
+        System.out.println("Hydra status -> heads: " + this.getHeads()
+                + "; tails: " + this.getTails());
         System.out.println();
     }
 

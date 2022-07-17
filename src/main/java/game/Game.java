@@ -20,11 +20,12 @@ public class Game {
         put("tails", 0);
     }};
 
+
     private boolean continueGame = true;
     private Hydra hydra;
 
     public void startGame() {
-        System.out.println("Help PyPy! We need to slay the hydra.");
+        System.out.println("Help " + GameStaticHelpers.getKNIGHT_NAME() + "! We need to slay the hydra!");
         this.buildHydra();
         this.gameLoop();
     }
@@ -115,6 +116,11 @@ public class Game {
                             ++count;
                         }
                 }
+                else if (this.getHydra().getHeads() == 1 && this.getHydra().getTails() == 1) {
+                    this.getHydra().removeOneTail();
+                    this.getHydra().printStatus();
+                    ++count;
+                }
                 else if (this.getHydra().getTails() != 0){
                     this.getHydra().removeTwoTails();
                     this.getHydra().printStatus();
@@ -123,7 +129,7 @@ public class Game {
                 this.checkLoseCondition();
                 this.checkWinCondition();
             }
-            System.out.println("PyPy defeated hydra in " + count + " actions.");
+            System.out.println(GameStaticHelpers.getKNIGHT_NAME() +" defeated hydra in " + count + " actions.");
         }
     }
 }
