@@ -24,6 +24,7 @@ public class Game {
     private Hydra hydra;
 
     public void startGame() {
+        System.out.println("Help PyPy! We need to slay the hydra.");
         this.buildHydra();
         this.gameLoop();
     }
@@ -36,26 +37,17 @@ public class Game {
 
     private void gameLoop() {
         while (this.isContinueGame()) {
-            this.printGameMenu();
+            GameStaticHelpers.printGameMenu();
             int action = GameStaticHelpers.receiveActionInput();
             this.performAction(action);
-            this.getHydra().printStatus();
-            this.checkWinCondition();
-            this.checkLoseCondition();
+
+            if (action != 5) {
+                this.getHydra().printStatus();
+                this.checkWinCondition();
+                this.checkLoseCondition();
+            }
         }
     }
-
-    private void printGameMenu() {
-        System.out.println("1. Cut off one head. ");
-        System.out.println("2. Cut off one tail. ");
-        System.out.println("3. Cut off two heads. ");
-        System.out.println("4. Cut off two tails. ");
-        System.out.println("5. Solve game with current hydra.");
-        System.out.println("6. Quit current game. ");
-        System.out.println();
-    }
-
-
 
     private void performAction(int action) {
         switch (action) {
@@ -72,7 +64,7 @@ public class Game {
                 this.getHydra().removeTwoTails();
                 break;
             case 5:
-                // FIXME: 7/16/2022 add solving algorithm
+                this.solveHydra();
                 break;
             case 6:
                 this.setContinueGame(false);
@@ -84,7 +76,7 @@ public class Game {
         if (this.getHydra().getHeads() == this.getWIN_PARAMETERS().get("heads")
                 && this.getHydra().getTails() == this.getWIN_PARAMETERS().get("tails")) {
             this.setContinueGame(false);
-            System.out.println("game.Game won! Congratulations.");
+            GameStaticHelpers.printWinMessage();
         }
     }
 
@@ -92,8 +84,46 @@ public class Game {
         if (this.getHydra().getHeads() == this.getLOSE_PARAMETERS().get("heads")
                 && this.getHydra().getTails() == this.getLOSE_PARAMETERS().get("tails")) {
             this.setContinueGame(false);
-            System.out.println("game.Game lost due to scenario where you cannot win.");
+            GameStaticHelpers.printLossMessage();
         }
     }
 
+    private void solveHydra() {
+        if ((this.getHydra().getHeads() % 2 != 0) && (this.getHydra().getTails() == 0)) {
+            this.setContinueGame(false);
+            GameStaticHelpers.printLossMessage();
+        }
+        else {
+            int count = 0;
+            while (this.isContinueGame()) {
+                while (this.getHydra().getHeads() > 1) {
+                    this.getHydra().removeTwoHeads();
+                    this.getHydra().printStatus();
+                    ++count;
+                }
+                if (this.getHydra().getHeads() == 0 && this.getHydra().getTails() == 1) {
+                        for (int i = 0; i < 3; i++) {
+                            this.getHydra().removeOneTail();
+                            this.getHydra().printStatus();
+                            ++count;
+                    }
+                }
+                else if (this.getHydra().getHeads() == 0 && this.getHydra().getTails() == 2) {
+                        for (int i = 0; i < 2; i++) {
+                            this.getHydra().removeOneTail();
+                            this.getHydra().printStatus();
+                            ++count;
+                        }
+                }
+                else if (this.getHydra().getTails() != 0){
+                    this.getHydra().removeTwoTails();
+                    this.getHydra().printStatus();
+                    ++count;
+                }
+                this.checkLoseCondition();
+                this.checkWinCondition();
+            }
+            System.out.println("PyPy defeated hydra in " + count + " actions.");
+        }
+    }
 }

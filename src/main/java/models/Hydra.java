@@ -52,6 +52,7 @@ public class Hydra {
         if (this.getTails() > 0) {
             this.decrementTails(1);
             this.incrementTails(2);
+            System.out.println("Removed one tail. Two grew in its place.");
         }
         else {
             System.out.println("Invalid move. Current tail count: " + this.getTails());
@@ -61,6 +62,7 @@ public class Hydra {
     public void removeTwoHeads() {
         if (this.getHeads() - 2 >= 0) {
             this.decrementHeads(2);
+            System.out.println("Removed two heads.");
         }
         else {
             System.out.println("Invalid move. Current head count: " + this.getHeads());
@@ -71,6 +73,7 @@ public class Hydra {
         if (this.getTails() - 2 >= 0) {
             this.decrementTails(2);
             this.incrementHeads(1);
+            System.out.println("Removed two tails. A head sprouts in response.");
         }
         else {
             System.out.println("Invalid move. Current tail count: " + this.getTails());

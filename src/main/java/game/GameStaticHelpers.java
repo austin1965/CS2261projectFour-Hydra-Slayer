@@ -4,6 +4,26 @@ import java.util.Scanner;
 
 public class GameStaticHelpers {
 
+    static void printGameMenu() {
+        System.out.println("1. Cut off one head. ");
+        System.out.println("2. Cut off one tail. ");
+        System.out.println("3. Cut off two heads. ");
+        System.out.println("4. Cut off two tails. ");
+        System.out.println("5. Solve game with current hydra.");
+        System.out.println("6. Quit current game. ");
+        System.out.println();
+    }
+
+    static void printWinMessage() {
+        System.out.println("You killed the hydra, PyPy! Thank you!!!");
+    }
+
+    static void printLossMessage() {
+        System.out.println("Hope is lost, PyPy! The hydra cannot be defeated now");
+        System.out.println("------------GAME OVER------------");
+        System.out.println("");
+    }
+
     static int receiveHydraInput(String hydraPart) {
         boolean inputValid = false;
         Scanner scanner = new Scanner(System.in);
